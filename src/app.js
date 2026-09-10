@@ -18,7 +18,8 @@ const app = express();
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'http://127.0.0.1:5173'
+    'http://127.0.0.1:5173',
+    'https://penuelasport.netlify.app'
 ];
 
 
@@ -27,15 +28,21 @@ app.use((req, res, next) => {
         req.headers.origin;
 
     if (
+        !origin ||
         allowedOrigins.includes(
             origin
         )
     ) {
         res.header(
             'Access-Control-Allow-Origin',
-            origin
+            origin || '*'
         );
     }
+
+    res.header(
+        'Vary',
+        'Origin'
+    );
 
     res.header(
         'Access-Control-Allow-Headers',
